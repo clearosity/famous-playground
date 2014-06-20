@@ -13,20 +13,8 @@ define(function(require, exports, module) {
   // create the main context
   var mainContext = Engine.createContext();
 
-
-
-  var initialTime = Date.now();
-  var centerSpinModifier = new Modifier({
-    origin: [0.5, 0.5],
-    /*
-    transform : function() {
-      return Transform.rotateY(.002 * (Date.now() - initialTime));
-    }*/
-  });
-
   var outlineModifier = new Modifier({
-    origin: [.5, .5],
-    transform: Transform.translate(0, 0, 0)
+    origin: [.5, .5]
   });
 
   var appView = new AppView();

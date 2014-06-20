@@ -36,6 +36,7 @@ define(function(require, exports, module) {
 
     this.parentMod = new Modifier({
       origin: [.5, .5],
+      size: [100,100],
       transform: this.parentTransTransform
     });
 
@@ -61,7 +62,7 @@ define(function(require, exports, module) {
     var initialTime = Date.now();
 
     function getSpinTransform() {
-        var ballSpinStateMatrix = Transform.rotate(-.001 * (Date.now() - initialTime), 0, 0);
+        var ballSpinStateMatrix = Transform.multiply( Transform.rotate( -.002 * (Date.now() - initialTime),  -.002 * (Date.now() - initialTime), -.002 * (Date.now() - initialTime)), Transform.scale(0.15, 0.15, 0.15));
         return ballSpinStateMatrix;
     }
     this.parentMod.setTransform(getSpinTransform);

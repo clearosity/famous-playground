@@ -30,6 +30,8 @@ define(function(require, exports, module) {
     Transitionable.registerMethod('snap', SnapTransition);
 
     var Polyhedron = require('./polyhedron');
+    var Cube       = require('./cube');
+    var Cube2       = require('./cube2');
     var Utils = require('utils');
 
 
@@ -61,19 +63,37 @@ define(function(require, exports, module) {
             this.centerPos = [((320 * 4) / 2) - (320 / 2), ((420 * 8) / 2) - (420 / 2), 6000];
         }
 
-
+        
         this.poly = new Polyhedron({
           pixelRatio: this.pixelRatio
         });
+        
+        var cube = new Cube();
+
+        var initialTime = Date.now();
+
+          var cube_mod = new Modifier({
+            origin: [0.5, 0.5],
+            //applies a continuous rotation to the cube
+            transform: function() {
+              return Transform.rotate(.002 * (Date.now() - initialTime), 0, 0);
+            }
+          });
 
 
+        
+        this.add(cube);
+        cube.rotate();
+        
         this.add(this.poly);
-        //this.poly.setPosition( this.centerPos );
-        //this.poly.rotate();
+        this.poly.rotate();
         return;
         
+
+        /*
         _createCamera.call(this, this.poly);
         this.poly.rotate();
+        */
     }
 
 
