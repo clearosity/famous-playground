@@ -28,6 +28,7 @@ define(function(require, exports, module) {
     this.pentagonHeight = (Math.sin(Utils.degToRadians(72)) *
                               this.sideLength) + (Math.cos(Utils.degToRadians(180 - 108 - (180 - (72 + 90))))
                               * this.sideLength);
+
     this.hexagonWidth = this.sideLength * 2;
     this.hexagonHeight = (Math.sin(Utils.degToRadians(180 - 120)) * this.sideLength) * 2;
 
@@ -60,7 +61,7 @@ define(function(require, exports, module) {
     var initialTime = Date.now();
 
     function getSpinTransform() {
-        var ballSpinStateMatrix = Transform.rotateX(-.001 * (Date.now() - initialTime));
+        var ballSpinStateMatrix = Transform.rotate(-.001 * (Date.now() - initialTime), 0, 0);
         return ballSpinStateMatrix;
     }
     this.parentMod.setTransform(getSpinTransform);

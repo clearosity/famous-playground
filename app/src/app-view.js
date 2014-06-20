@@ -67,14 +67,13 @@ define(function(require, exports, module) {
         });
 
 
-        /*
         this.add(this.poly);
-        this.poly.setPosition( this.centerPos );
+        //this.poly.setPosition( this.centerPos );
+        //this.poly.rotate();
         return;
-        */
         
         _createCamera.call(this, this.poly);
-        //this.poly.rotate();
+        this.poly.rotate();
     }
 
 
@@ -203,8 +202,8 @@ define(function(require, exports, module) {
 
         this.ballSpinModifier.setOpacity(.9);
 
-        this._add(cameraModifier).add(this.ballPositionMod).add(this.ballSpinModifier).add(viewMod);
-        //this._add(cameraModifier).add(this.ballPositionMod).add(viewMod);
+        //this._add(cameraModifier).add(this.ballPositionMod).add(this.ballSpinModifier).add(viewMod);
+        this._add(cameraModifier).add(this.ballPositionMod).add(viewMod);
         //this._add(cameraModifier).add(this.ballPositionMod).add(this.ballSpinModifier).add(viewMod);
 
 
