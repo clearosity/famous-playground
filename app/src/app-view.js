@@ -74,7 +74,7 @@ define(function(require, exports, module) {
         */
         
         _createCamera.call(this, this.poly);
-
+        //this.poly.rotate();
     }
 
 
@@ -127,6 +127,9 @@ define(function(require, exports, module) {
 
         this.ballPositionTransitionableTransform = new TransitionableTransform();
 
+        this.rotateTransitionableTransform = new TransitionableTransform();
+
+
         var initialTime = Date.now();
 
         function getSpinTransform() {
@@ -138,6 +141,8 @@ define(function(require, exports, module) {
             origin: [.5, .5],
             transform: getSpinTransform.bind(this)
         });
+
+
 
         this.ballPositionMod = new Modifier({
             origin: [.5, .5],

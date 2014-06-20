@@ -56,6 +56,16 @@ define(function(require, exports, module) {
     )
   }
 
+  Polyhedron.prototype.rotate = function(){
+    var initialTime = Date.now();
+
+    function getSpinTransform() {
+        var ballSpinStateMatrix = Transform.rotateX(-.001 * (Date.now() - initialTime));
+        return ballSpinStateMatrix;
+    }
+    this.parentMod.setTransform(getSpinTransform);
+  }
+
 
   Polyhedron.prototype._initSurfaces = function(){
     this.surfaces = [];
