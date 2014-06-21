@@ -9,8 +9,10 @@ define(function(require, exports, module) {
   var Modifier = require('famous/core/Modifier');
   var TransitionableTransform = require('famous/transitions/TransitionableTransform');
   var View = require('famous/core/View');
-
   var Timer = require('famous/utilities/Timer');
+
+  var TransitionableView = require('./transitionable-view');
+
 
   //For rotation. Famo.us uses radians for angles
   var convert = Math.PI/180;
@@ -20,20 +22,11 @@ define(function(require, exports, module) {
 
 
   var Cube = function(options){
-    View.apply(this, arguments);
-
     options = options || {};
 
     this.size = options.size || 100;
-    this._origin = options.origin || {x: 0.5, y: 0.5};
 
-
-    this.parentMod = new Modifier({
-      origin: [.5, .5],
-      size: [this.size,this.size]
-    });
-
-    this.parentNode = this.add( this.parentMod );
+    TransitionableView.apply(this, [options]);
 
     this._surfaces = [];
     
@@ -45,20 +38,9 @@ define(function(require, exports, module) {
 
   };
 
-  Cube.prototype = Object.create(View.prototype);
+  Cube.prototype = Object.create(TransitionableView.prototype);
 
   Cube.prototype.constructor = Cube;
-
-
-  Cube.prototype.rotate = function(){
-    var initialTime = Date.now();
-
-    function getSpinTransform() {
-      return Transform.rotate( -.001 * (Date.now() - initialTime), 0, 0);
-    }
-    this.parentMod.setTransform(getSpinTransform);
-  }
-
 
 
   Cube.prototype._createSurfaces = function(){
@@ -76,7 +58,6 @@ define(function(require, exports, module) {
         }
       });
 
-      //this.setContent("x: " + e.offsetX + ", y: " + e.offsetY + ", z: " + e.offsetZ);
       this._parentMods[i] = new Modifier({
         origin: [0.5,0.5],
         opacity: 0.5
@@ -84,7 +65,7 @@ define(function(require, exports, module) {
 
       //each surface gets applied to a parentModifier and that modifier will be respnsible for the surface's arrangement
       //to form a cube
-      this.parentNode.add(this._parentMods[i]).add(this._surfaces[i]);
+      this.add(this._parentMods[i]).add(this._surfaces[i]);
     }
 
   }

@@ -13,13 +13,13 @@ define(function(require, exports, module) {
   // create the main context
   var mainContext = Engine.createContext();
 
-  var outlineModifier = new Modifier({
+  var mod = new Modifier({
     origin: [.5, .5]
   });
 
   var appView = new AppView();
 
-  mainContext.add(outlineModifier).add(appView);
-  mainContext.setPerspective(1000);
+  mainContext.add(mod).add(appView);
 
+  mainContext.setPerspective(1000);
 });

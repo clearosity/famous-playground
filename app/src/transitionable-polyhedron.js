@@ -12,9 +12,11 @@ define(function(require, exports, module) {
 
   var Utils = require('./utils');
 
+  var TransitionableView = require('./transitionable-view');
+
 
   var Polyhedron = function(options){
-    View.apply(this, arguments);
+    TransitionableView.apply(this, arguments);
 
     this.options = options || {};
 
@@ -32,33 +34,18 @@ define(function(require, exports, module) {
     this.hexagonWidth = this.sideLength * 2;
     this.hexagonHeight = (Math.sin(Utils.degToRadians(180 - 120)) * this.sideLength) * 2;
 
-    this.parentTransTransform = new TransitionableTransform();
-
-    this.parentMod = new Modifier({
-      origin: [.5, .5],
-      size: [100,100],
-      transform: this.parentTransTransform,
-      opacity: 0.9
-    });
-
-    this.parentNode = this.add( this.parentMod );
-
 
     this._initSurfaces();
     this._positionSurfaces();
   }
 
-  Polyhedron.prototype = Object.create(View.prototype);
+  Polyhedron.prototype = Object.create(TransitionableView.prototype);
 
   Polyhedron.prototype.constructor = Polyhedron;
 
 
-  Polyhedron.prototype.setPosition = function(position){
-    this.parentTransTransform.set(
-      Transform.translate(position[0], position[1], 4000)
-    )
-  }
 
+  /*
   Polyhedron.prototype.rotate = function(){
     var initialTime = Date.now();
 
@@ -68,6 +55,7 @@ define(function(require, exports, module) {
     }
     this.parentMod.setTransform(getSpinTransform);
   }
+  */
 
 
   Polyhedron.prototype._initSurfaces = function(){
@@ -142,7 +130,7 @@ define(function(require, exports, module) {
 
       this.transitionableTransforms[i].set(Transform.translate(this.surfaces[i].flatPosition[0], this.surfaces[i].flatPosition[1], 0));
 
-      this.parentNode.add(this.mods[i]).add(this.surfaces[i]);
+      this.add(this.mods[i]).add(this.surfaces[i]);
     }
 
   }

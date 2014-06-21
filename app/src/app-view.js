@@ -30,7 +30,9 @@ define(function(require, exports, module) {
     Transitionable.registerMethod('snap', SnapTransition);
 
     var Polyhedron = require('./polyhedron');
+    var TransitionablePolyhedron       = require('./transitionable-polyhedron');
     var Cube       = require('./cube');
+    var TransitionableCube       = require('./transitionable-cube');
     var Cube2       = require('./cube2');
     var Utils = require('utils');
 
@@ -44,8 +46,6 @@ define(function(require, exports, module) {
         } else {
             this.pixelRatio = 1
         }
-
-        //alert(window.devicePixelRatio);
 
         this.minZoom = 8000;
         this.maxZoom = -200 * this.pixelRatio;
@@ -63,37 +63,25 @@ define(function(require, exports, module) {
             this.centerPos = [((320 * 4) / 2) - (320 / 2), ((420 * 8) / 2) - (420 / 2), 6000];
         }
 
-        
-        this.poly = new Polyhedron({
-          pixelRatio: this.pixelRatio
+        //this.poly = new TransitionablePolyhedron({
+        this.poly = new TransitionablePolyhedron({
+          pixelRatio: this.pixelRatio,
+          scale: .15
         });
         
-        var cube = new Cube();
+        this.cube = new TransitionableCube({
+            scale: 1
+        });
 
-        var initialTime = Date.now();
-
-          var cube_mod = new Modifier({
-            origin: [0.5, 0.5],
-            //applies a continuous rotation to the cube
-            transform: function() {
-              return Transform.rotate(.002 * (Date.now() - initialTime), 0, 0);
-            }
-          });
-
-
-        
-        this.add(cube);
-        cube.rotate();
+        this.add(this.cube);
+        this.cube.rotate();
         
         this.add(this.poly);
-        this.poly.rotate();
-        return;
+        var self = this;
+        setTimeout(function(){
+          self.poly.rotate();
+        }, 500)
         
-
-        /*
-        _createCamera.call(this, this.poly);
-        this.poly.rotate();
-        */
     }
 
 
@@ -102,7 +90,7 @@ define(function(require, exports, module) {
 
     AppView.DEFAULT_OPTIONS = {};
 
-
+    /*
     function setCameraMatrix(spin, rotate, pos, override) {
 
         pos[0] = Math.max(this.maxLeft, Math.min(pos[0], this.maxRight));
@@ -182,7 +170,7 @@ define(function(require, exports, module) {
         );
 
 
-        /*
+        
         this.ballPositionTransitionableTransform.set(Transform.translate(this.centerPos[0], this.centerPos[1] + 300, ballZPos), {
             duration: 2500 ,
             curve: 'outCubic'
@@ -217,7 +205,7 @@ define(function(require, exports, module) {
             }.bind(this));
         }.bind(this));
 
-        */
+        
 
 
         this.ballSpinModifier.setOpacity(.9);
@@ -225,9 +213,8 @@ define(function(require, exports, module) {
         //this._add(cameraModifier).add(this.ballPositionMod).add(this.ballSpinModifier).add(viewMod);
         this._add(cameraModifier).add(this.ballPositionMod).add(viewMod);
         //this._add(cameraModifier).add(this.ballPositionMod).add(this.ballSpinModifier).add(viewMod);
-
-
     }
+    */
 
 
     module.exports = AppView;
