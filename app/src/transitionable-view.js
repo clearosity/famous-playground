@@ -30,8 +30,9 @@ define(function(require, exports, module) {
 
     this._translateTransform = new TransitionableTransform();
     var opts = _.extend({}, this._options, {
-      tranform: this._translateTransform
+      transform: this._translateTransform
     })
+
     this._translateMod = new Modifier(opts);
 
     this._rotateTransform = new TransitionableTransform();
@@ -56,6 +57,30 @@ define(function(require, exports, module) {
     return this._parentNode.add( renderNode );
   }
 
+
+  TransitionableView.prototype.random = function(min, max){
+    return Math.random() * (max - min + 1) + min;
+  }
+
+
+  TransitionableView.prototype.translate = function(){
+    this._out = !this._out;
+
+    var x = this._out ? 0 : this.random(-500, 500);
+    var y = this._out ? 0 : this.random(-500, 500);
+    var z = this._out ? 0 : this.random(-500, 500);
+
+    this._translateTransform.set( Transform.translate(x, y, z), {
+      duration: 1000,
+      curve: 'outCubic'
+    }, function() {
+      console.log("here")
+    });
+
+  }
+
+
+
   TransitionableView.prototype.rotate = function(){
     if(this._rotating) return;
 
@@ -67,15 +92,13 @@ define(function(require, exports, module) {
 
     var initialTime = Date.now();
 
-
-
     self._rotateMod.setTransform( function(){
       self._rotateMatrix = Transform.multiply( Transform.rotate(-.003 * (Date.now() - initialTime), -.003 * (Date.now() - initialTime), 0),
                               Transform.scale(self._scale, self._scale, self._scale))
       return self._rotateMatrix;
     });
 
-    var to = Math.random() * (5000 - 2000 + 1) + 2000;
+    var to = this.random(2000, 5000);
 
     setTimeout(function(){
       self.haltRotate();
@@ -93,7 +116,7 @@ define(function(require, exports, module) {
     
     var self = this;
     this._rotateTransform.set(
-      Transform.multiply( Transform.rotateX(0),
+      Transform.multiply( Transform.rotate(0, 0, 0),
                               Transform.scale(self._scale, self._scale, self._scale)), {
         duration: 1000,
         curve: 'outCubic'

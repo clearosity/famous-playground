@@ -70,7 +70,8 @@ define(function(require, exports, module) {
         });
         
         this.cube = new TransitionableCube({
-            scale: 1
+            scale: 1,
+            size: 150
         });
 
         this.add(this.cube);
@@ -81,6 +82,12 @@ define(function(require, exports, module) {
         setTimeout(function(){
           self.poly.rotate();
         }, 500)
+
+        setInterval( function(){
+          self.poly.translate()
+          self.cube.translate()
+        }, 5000)
+
         
     }
 
